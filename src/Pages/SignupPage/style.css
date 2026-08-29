@@ -1,0 +1,57 @@
+body {
+    background-image: url(../../../public/assets/ChatGPT\ Image\ Aug\ 29\,\ 2026\,\ 09_22_36\ AM.png);
+    background-size: cover;
+}
+
+#signupContainer {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    gap: 16px;
+    background-color: rgba(255, 255, 255, 0.411);
+    border-radius: 12px;
+    padding: 20px;
+    border: 0.5px solid lightgray;
+    margin-top: 100px;
+}
+
+#signupContainer form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: right;
+}
+
+#signupContainer form input {
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 11px;
+    height: 30px;
+    border: 0.2px solid lightgray;
+    text-align: right;
+    padding: 5px;
+}
+
+#signupContainer form input::placeholder {
+    text-align: right;
+    padding-right: 10px;
+}
+
+#signupContainer form button {
+    width: 20%;
+    margin: 20px auto;
+    background-color: rgb(169, 227, 247);
+    border: 0.5px solid rgba(0, 0, 255, 0.548);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+@media(max-width:900px) {
+    #signupContainer{
+        background-color: white;
+    }
+}

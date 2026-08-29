@@ -1,0 +1,135 @@
+.box img {
+    width: 130px;
+    border-radius: 10px;
+}
+
+#boxes {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
+}
+
+.box {
+    background-color: #EBF7FB;
+    display: flex;
+    flex-direction: column;
+    border: 0.2px solid gray;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.title {
+    color: rgb(134, 68, 134);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.myWords {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 100px;
+    color: rgb(53, 53, 53);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.myWords h2 {
+    text-align: center;
+    color: black;
+}
+
+.words {
+    height: 95%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 12px;
+}
+
+.row {
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.myWords button {
+    background-color: black;
+    color: white;
+    width: 100px;
+    margin: 0 auto;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.overview {
+    width: 300px;
+    cursor: pointer;
+    border-radius: 12px;
+    position: absolute;
+    bottom: -50px;
+    margin: 0 auto;
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../../../public/assets/blur.png);
+    background-size: cover;
+    padding: 20px;
+}
+
+.myWords form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.myWords form input {
+    width: 80%;
+    height: 30px;
+    border-radius: 12px;
+    border: 0.5px solid gray;
+    padding: 5px;
+}
+
+.myWords form input::placeholder {
+    padding-left: 10px;
+}
+
+@media(max-width : 900px) {
+    .main {
+        height: auto;
+    }
+
+    #boxes {
+        flex-direction: column-reverse;
+    }
+
+    #boxes i {
+        transform: rotate(270deg);
+        color: rgb(186, 131, 238);
+    }
+
+    .title {
+        color: black;
+    }
+}
