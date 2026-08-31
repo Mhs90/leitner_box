@@ -22,6 +22,7 @@ export default function SignupPage() {
         }
         if (password !== repeatPassword) {
             alert('رمز عبور را به درستی تکرار کنید')
+            return;
         }
         try {
             const response = await fetch('url', {
