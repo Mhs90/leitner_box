@@ -70,7 +70,7 @@
     text-overflow: ellipsis;
 }
 
-.myWords button {
+.addWordBtn {
     background-color: black;
     color: white;
     width: 100px;
@@ -113,6 +113,23 @@
 
 .myWords form input::placeholder {
     padding-left: 10px;
+}
+
+.fa-trash {
+    color: red;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.buttons button {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 @media(max-width : 900px) {

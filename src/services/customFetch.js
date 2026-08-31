@@ -1,4 +1,4 @@
-const BASE_URL = 'https://your-api-url.com';
+const BASE_URL = 'https://BASE-URL.com';
 export const customFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem('accessToken');
   const headers = {
@@ -14,7 +14,7 @@ export const customFetch = async (endpoint, options = {}) => {
   });
   if (response.status === 401) {
     console.warn("Session expired. Redirecting to login...");
-    localStorage.removeItem('accessToken'); // پاک کردن توکن فاسد
+    localStorage.removeItem('accessToken');
     window.location.href = '/login'; 
     
     throw new Error("Unauthorized");

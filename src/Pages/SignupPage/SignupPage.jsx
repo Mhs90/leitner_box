@@ -20,7 +20,10 @@ export default function SignupPage() {
             alert('رمز عبور باید حداقل 8 کاراکتر باشد')
             return;
         }
-        if (password === repeatPassword) {
+        if (password !== repeatPassword) {
+            alert('رمز عبور را به درستی تکرار کنید')
+        }
+        try {
             const response = await fetch('url', {
                 method: 'POST',
                 headers: {
@@ -31,9 +34,13 @@ export default function SignupPage() {
                     password: password
                 })
             })
+            const data = await response.json()
+            console.log(data);
+
             window.location.href = '/login'
-        } else {
-            alert('رمز عبور را به درستی تکرار کنید')
+        } catch (error) {
+            console.error('Connection error:', error);
+            alert('خطا در ارتباط با سرور');
         }
 
     }
