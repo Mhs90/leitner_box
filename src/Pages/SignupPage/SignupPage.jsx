@@ -6,6 +6,7 @@ export default function SignupPage() {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
+    const [checked, setChecked] = useState('box')
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -57,6 +58,13 @@ export default function SignupPage() {
                         <input type="password" placeholder='رمز عبور' value={password} onChange={e => setPassword(e.target.value)} required />
                         <label htmlFor="pasword"> : تکرار رمز عبور</label>
                         <input type="password" placeholder='تکرار رمز عبور' value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} required />
+                        <label htmlFor="checkbox">آواتار خودت رو انتخاب کن</label>
+                        <div className="radioContainer">
+                            <div><input checked={checked === 'box'} type="radio" name='radi' value='box' /><img onClick={() => setChecked('box')} src="/assets/box.png" alt="box" className='avatar' /></div>
+                            <div><input checked={checked === 'lumo'} type="radio" name='radi' value='lumo' /><img onClick={() => setChecked('lumo')} src="/assets/lumo.png" alt="lumo" className='avatar' /></div>
+                            <div><input checked={checked === 'della'} type="radio" name='radi' value='della' /><img onClick={() => setChecked('della')} src="/assets/della.png" alt="della" className='avatar' /></div>
+                            <div><input checked={checked === 'velo'} type="radio" name='radi' value='velo' /><img onClick={() => setChecked('velo')} src="/assets/velo.png" alt="velo" className='avatar' /></div>
+                        </div> 
                         <button>ثبت نام</button>
                     </form>
                     <p>قبلا اکانت داشتی؟ <Link to='/login'>ورود</Link></p>

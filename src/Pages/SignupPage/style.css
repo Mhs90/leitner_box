@@ -15,7 +15,6 @@ body {
     border-radius: 12px;
     padding: 20px;
     border: 0.5px solid lightgray;
-    margin-top: 100px;
 }
 
 #signupContainer form {
@@ -51,7 +50,27 @@ body {
 
 
 @media(max-width:900px) {
-    #signupContainer{
+    #signupContainer {
         background-color: white;
     }
+}
+
+.avatar {
+    width: 100px;
+    height: 100ox;
+    cursor: pointer;
+}
+
+.radioContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 0 auto;
+}
+
+.radioContainer div{
+    display: flex;flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
