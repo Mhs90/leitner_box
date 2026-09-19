@@ -1,9 +1,5 @@
-body {
-    background-image: url(../../../public/assets/ChatGPT\ Image\ Aug\ 29\,\ 2026\,\ 09_22_36\ AM.png);
-    background-size: cover;
-}
 
-#signupContainer {
+#changeContainer {
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -18,14 +14,14 @@ body {
     margin-top: 5%;
 }
 
-#signupContainer form {
+#changeContainer form {
     display: flex;
     flex-direction: column;
     gap: 12px;
     text-align: right;
 }
 
-#signupContainer form input {
+#changeContainer form input {
     width: 50%;
     margin: 0 auto;
     border-radius: 11px;
@@ -35,12 +31,12 @@ body {
     padding: 5px;
 }
 
-#signupContainer form input::placeholder {
+#changeContainer form input::placeholder {
     text-align: right;
     padding-right: 10px;
 }
 
-#signupContainer form button {
+#changeContainer form button {
     width: 20%;
     margin: 20px auto;
     background-color: rgb(169, 227, 247);
@@ -49,9 +45,17 @@ body {
     cursor: pointer;
 }
 
+.background {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../../../public/assets/ChatGPT\ Image\ Aug\ 29\,\ 2026\,\ 09_22_36\ AM.png);
+    background-size: cover;
+    padding: 20px;
+}
+
 
 @media(max-width:900px) {
-    #signupContainer {
+    #changeContainer{
         background-color: white;
     }
 }

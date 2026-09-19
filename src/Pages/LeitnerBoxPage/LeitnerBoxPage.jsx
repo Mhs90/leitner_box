@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Box from '../../Components/Box'
 import Word from '../../Components/Word'
 import './style.css'
-// import { customFetch } from '../../services/customFetch'
+import { Link } from "react-router-dom";
+import { customFetch } from '../../services/customFetch'
 
 export default function LeitnerBoxPage() {
     const [words, setWords] = useState([
@@ -12,47 +13,46 @@ export default function LeitnerBoxPage() {
         { word: 'map', definition: 'a diagrammatic representation of an area of land or sea showing physical features, cities, roads, etc.' }
     ])
     const [condition, setCondition] = useState('myWords')
+    const [userName, setUserName] = useState('daria')
     const [wordValue, setWordValue] = useState('')
     const [definitionValue, setDefinitionValue] = useState('')
     const [targetWord, setTargetWord] = useState('')
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     useEffect(() => {
-        // const token = localStorage.getItem('accessToken');
-        // if (token) {
-        //     window.location.href = '/'
-        // }
-        // else {
-        //     window.location.href = '/signup'
-        // }
-        //     const data = customFetch('/users')
-    }, [])
+        const fetchData = async () => {
+            const token = localStorage.getItem('accessToken');
+
+            if (!token) {
+                window.location.href = '/signup';
+                return;
+            }
+
+            try {
+                const userData = await customFetch('/users');
+                const cardsData = await customFetch('/cards');
+
+                setUserName(userData.user_name);
+                setWords(cardsData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const addWordBtnClickHandler = async (e) => {
         e.preventDefault()
-        // try {
-        //     const response = await fetch('/url', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             word: wordValue,
-        //             definition: definitionValue
-        //         })
-        //     })
-        //     if (response.ok) {
+        await customFetch('url', {
+            method: 'POST', body: JSON.stringify({
+                word: wordValue,
+                definition: definitionValue
+            })
+        })
         setWords(prev => {
             return [...prev,
             { word: wordValue, definition: definitionValue }]
         })
-        // const message = response.json()
-        //     }
-        //     else {
-        //         alert('خطا در اضافه شدن لغت')
-        //     }
-        // } catch (error) {
-        //     alert(error.message || 'خطا در ارتباط با سرور')
-        // }
         setCondition('myWords')
         setWordValue('')
         setDefinitionValue('')
@@ -61,27 +61,13 @@ export default function LeitnerBoxPage() {
         const clickedEl = e.target;
         const word = clickedEl.closest('.row').querySelector('.word').textContent.replace(':', '').trim();
         const newWords = [];
-        // try {
-        //     const deletResponse = await fetch('/url', {
-        //         method: 'DELETE',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        //     if (deletResponse.ok) {
+        await customFetch(`/url/${word}`, { method: 'DELETE' })
         words.forEach(wordDetails => {
             if (wordDetails.word !== word) {
                 newWords.push(wordDetails);
             }
         })
         setWords(newWords)
-        //     }
-        //     else {
-        //         alert('لغت حذف نشد')
-        //     }
-        // } catch (error) {
-        //     alert(error.message || 'لغت حذف نشد')
-        // }
     }
     const changeBtnClickHandler = (event) => {
         setCondition('changeWord')
@@ -91,23 +77,15 @@ export default function LeitnerBoxPage() {
         setWordValue(word)
         setDefinitionValue(definiton)
     }
+
     const changeWord = async (e) => {
         e.preventDefault()
-        // try {
-        //     const response = await fetch("url", {
-        //         method: 'PUT',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             word: wordValue,
-        //             definition: definitionValue
-        //         })
-        //     })
-        //     if (!response.ok) {
-        //         alert('لغت تغییر نکرد')
-        //     }
-        //     else {
+        await customFetch('/url', {
+            method: 'PUT', body: JSON.stringify({
+                word: wordValue,
+                definition: definitionValue
+            })
+        })
         setWords(prevWords =>
             prevWords.map(item =>
                 item.word === targetWord
@@ -115,30 +93,32 @@ export default function LeitnerBoxPage() {
                     : item
             )
         );
-        //     }
-        // } catch (error) {
-        //     alert(error.message || 'خطا در ارتباط با سرور لغت تغییر نکرد')
-        // }
         setDefinitionValue('')
         setWordValue('')
         setCondition('myWords')
     }
     return (
         <div className='main'>
-            <div className="tasks" onClick={() => isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true)}>
-                <div className={`task ${isMenuOpen ? 'top' : ''}`}>
+            <div className="tasks">
+                <div className={`task ${isMenuOpen ? 'top' : ''}`} onClick={() => isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true)}>
                     <img src="/assets/box.png" alt="" className="avatar" />
-                    <h4>Daria</h4>
+                    <h4>{userName}</h4>
                     <i className="fa fa-chevron-down"></i>
                 </div>
                 {isMenuOpen &&
                     <>
-                        <div className="task middle">
+                        <Link className="task middle" to='/profile'>
                             <h4> تغییر پروفایل</h4>
-                        </div>
-                        <div className="task bottom">
+                        </Link>
+                        <div className="task middle" onClick={() => window.localStorage.removeItem('accessToken')}>
                             <i className="fa-solid fa-right-from-bracket"></i>
                             <h4>خروج از حساب</h4>
+                        </div>
+                        <div className="task bottom" onClick={() => {
+                            customFetch('URL', { method: 'DELETE' })
+                        }}>
+                            <i className="fa-solid fa-trash" style={{ color: 'black' }}></i>
+                            <h4>حذف حساب</h4>
                         </div>
                     </>}
             </div>
@@ -153,7 +133,7 @@ export default function LeitnerBoxPage() {
                 <Box boxNumber={2} wordsNumber={8} />
                 <i className="fa-solid fa-arrow-left"></i>
                 <Box boxNumber={1} wordsNumber={10} />
-                <button className='overview'>مرور واژه ها</button>
+                <button className='overview' onClick={() => window.location.href = '/overview'}>مرور واژه ها</button>
             </div>
             {condition === 'myWords' ? <div className="myWords">
                 <h2>لغات من</h2>

@@ -1,6 +1,10 @@
 export default function Box({ boxNumber, wordsNumber }) {
+    const boxesClickHandler = () => {
+        window.location.href =`/box/${boxNumber}`
+        
+    }
     return (
-        <div className="box">
+        <div className="box" onClick={boxesClickHandler}>
             <img src={`/assets/${boxNumber === 1 ? 'first'
                 : boxNumber === 2 ? 'second'
                     : boxNumber === 3 ? 'third'

@@ -62,13 +62,23 @@
     background-color: lightgray;
     padding: 10px;
     border-radius: 12px;
+    z-index: 999;
 }
 
 .description {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: block;
+    transition: all 0.3s ease;
 }
+
+.description.active {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+}
+
 
 .addWordBtn {
     background-color: black;
@@ -132,12 +142,12 @@
     cursor: pointer;
 }
 
-.tasks{
+.tasks {
     position: absolute;
     right: 20px;
 }
 
-.tasks h4{
+.tasks h4 {
     margin-right: 10px;
 }
 
@@ -152,21 +162,23 @@
     height: 50px
 }
 
-.task.top{
+.task.top {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.task.middle{
+.task.middle {
     border-radius: 0;
+    text-decoration: none;
+    color: black;
 }
 
-.task.bottom{
+.task.bottom {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-.task i{
+.task i {
     margin-right: 15px;
 }
 

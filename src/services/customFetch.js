@@ -16,7 +16,6 @@ export const customFetch = async (endpoint, options = {}) => {
     console.warn("Session expired. Redirecting to login...");
     localStorage.removeItem('accessToken');
     window.location.href = '/login'; 
-    
     throw new Error("Unauthorized");
   }
   if (!response.ok) {

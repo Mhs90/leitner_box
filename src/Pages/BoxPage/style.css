@@ -1,0 +1,39 @@
+.back{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../../../public/assets/blur.png);
+    background-size: cover;
+    padding: 20px;
+}
+
+.words{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    position: relative;
+}
+
+.back .words .wordContainer{
+    background-color: lightblue;
+    border-radius: 10px;
+    padding: 10px;
+    width: 525px;
+}
+
+.back button{
+    all: unset;
+    font-size: larger;
+}
+
+.back .title{
+    all: unset;
+    width: 500px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
