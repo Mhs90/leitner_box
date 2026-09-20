@@ -6,14 +6,8 @@ import { Link } from "react-router-dom";
 import { customFetch } from '../../services/customFetch'
 
 export default function LeitnerBoxPage() {
-    const [words, setWords] = useState([
-        { word: 'travel', definition: 'go from one place to another, typically over a distance of some length.' },
-        { word: 'trip', definition: 'a journey or excursion, especially for pleasure.' },
-        { word: 'airplane', definition: 'a powered flying vehicle with fixed wings and a weight greater than that of the air it displaces; an aeroplane.' },
-        { word: 'map', definition: 'a diagrammatic representation of an area of land or sea showing physical features, cities, roads, etc.' }
-    ])
+    const [words, setWords] = useState([])
     const [condition, setCondition] = useState('myWords')
-    const [userName, setUserName] = useState('daria')
     const [wordValue, setWordValue] = useState('')
     const [definitionValue, setDefinitionValue] = useState('')
     const [targetWord, setTargetWord] = useState('')
@@ -28,10 +22,8 @@ export default function LeitnerBoxPage() {
             }
 
             try {
-                const userData = await customFetch('/users');
                 const cardsData = await customFetch('/cards');
 
-                setUserName(userData.user_name);
                 setWords(cardsData);
             } catch (error) {
                 console.error(error);
@@ -43,15 +35,12 @@ export default function LeitnerBoxPage() {
 
     const addWordBtnClickHandler = async (e) => {
         e.preventDefault()
-        await customFetch('url', {
-            method: 'POST', body: JSON.stringify({
-                word: wordValue,
-                definition: definitionValue
-            })
+        await customFetch(`/create_card?word=${wordValue}&description=${definitionValue}`, {
+            method: 'POST'
         })
         setWords(prev => {
             return [...prev,
-            { word: wordValue, definition: definitionValue }]
+            { word: wordValue, description: definitionValue }]
         })
         setCondition('myWords')
         setWordValue('')
@@ -61,7 +50,7 @@ export default function LeitnerBoxPage() {
         const clickedEl = e.target;
         const word = clickedEl.closest('.row').querySelector('.word').textContent.replace(':', '').trim();
         const newWords = [];
-        await customFetch(`/url/${word}`, { method: 'DELETE' })
+        await customFetch(`/delete_card?word=${word}`, { method: 'DELETE' })
         words.forEach(wordDetails => {
             if (wordDetails.word !== word) {
                 newWords.push(wordDetails);
@@ -80,16 +69,16 @@ export default function LeitnerBoxPage() {
 
     const changeWord = async (e) => {
         e.preventDefault()
-        await customFetch('/url', {
-            method: 'PUT', body: JSON.stringify({
-                word: wordValue,
-                definition: definitionValue
-            })
+        await customFetch(`/change_word?word=${targetWord}&new_word=${wordValue}`, {
+            method: 'PUT'
+        })
+        await customFetch(`/change_description?word=${wordValue}&new_description=${definitionValue}`, {
+            method: 'PUT'
         })
         setWords(prevWords =>
             prevWords.map(item =>
                 item.word === targetWord
-                    ? { word: wordValue, definition: definitionValue }
+                    ? { word: wordValue, description: definitionValue }
                     : item
             )
         );
@@ -102,7 +91,7 @@ export default function LeitnerBoxPage() {
             <div className="tasks">
                 <div className={`task ${isMenuOpen ? 'top' : ''}`} onClick={() => isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true)}>
                     <img src="/assets/box.png" alt="" className="avatar" />
-                    <h4>{userName}</h4>
+                    <h4>{localStorage.getItem('leitner_user_name')}</h4>
                     <i className="fa fa-chevron-down"></i>
                 </div>
                 {isMenuOpen &&
@@ -110,12 +99,17 @@ export default function LeitnerBoxPage() {
                         <Link className="task middle" to='/profile'>
                             <h4> تغییر پروفایل</h4>
                         </Link>
-                        <div className="task middle" onClick={() => window.localStorage.removeItem('accessToken')}>
+                        <div className="task middle" onClick={() => {
+                            window.localStorage.removeItem('accessToken')
+                            window.localStorage.removeItem('leitner_user_name')
+                            window.location.href = '/login'
+                        }}>
                             <i className="fa-solid fa-right-from-bracket"></i>
                             <h4>خروج از حساب</h4>
                         </div>
                         <div className="task bottom" onClick={() => {
-                            customFetch('URL', { method: 'DELETE' })
+                            customFetch('/delete_user', { method: 'DELETE' })
+                            window.location.href = '/signup'
                         }}>
                             <i className="fa-solid fa-trash" style={{ color: 'black' }}></i>
                             <h4>حذف حساب</h4>
@@ -143,7 +137,7 @@ export default function LeitnerBoxPage() {
                             return (<Word
                                 key={index}
                                 word={element.word}
-                                definition={element.definition}
+                                definition={element.description}
                                 deleteBtnClickHandler={deleteBtnCickHandler}
                                 changeBtnClickHandler={changeBtnClickHandler}
                             />)

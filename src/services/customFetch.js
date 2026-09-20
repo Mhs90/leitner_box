@@ -1,4 +1,4 @@
-const BASE_URL = 'https://BASE-URL.com';
+const BASE_URL = 'http://127.0.0.1:8000';
 export const customFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem('accessToken');
   const headers = {
@@ -19,8 +19,9 @@ export const customFetch = async (endpoint, options = {}) => {
     throw new Error("Unauthorized");
   }
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Something went wrong');
-  }
+  const errorData = await response.json().catch(() => ({}));
+  console.log('Backend error:', errorData);
+  throw new Error(JSON.stringify(errorData));
+}
   return response.json();
 };

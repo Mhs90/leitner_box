@@ -10,13 +10,13 @@ export default function LoginPage() {
         e.preventDefault();
 
         try {
-            const response = await fetch('url', {
+            const response = await fetch('http://127.0.0.1:8000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_name: userName,
+                    name: userName,
                     password: password
                 })
             });
@@ -26,7 +26,8 @@ export default function LoginPage() {
             if (response.ok) {
                 if (data.token) {
                     localStorage.setItem('accessToken', data.token);
-                    window.location.href = '/leitner';
+                    localStorage.setItem('leitner_user_name', userName);
+                    window.location.href = '/';
                 } else {
                     alert('توکنی دریافت نشد');
                 }
