@@ -14,14 +14,6 @@ export default function ChangeProfilePage() {
                 window.location.href = '/signup';
                 return;
             }
-
-            try {
-                const userData = await customFetch('/users');
-                setUserName(userData.user_name);
-                setPassword(userData.password);
-            } catch (error) {
-                console.error(error);
-            }
         };
 
         fetchData();
@@ -52,7 +44,6 @@ export default function ChangeProfilePage() {
         const changePasswordData =await customFetch(`/change_password?new_password=${password}`, {
             method: 'PUT'
         })
-        localStorage.setItem('accessToken', changePasswordData.new_token)
         window.location.href = '/'
     }
 
