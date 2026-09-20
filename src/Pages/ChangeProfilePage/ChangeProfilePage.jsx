@@ -41,7 +41,7 @@ export default function ChangeProfilePage() {
         })
         localStorage.setItem('accessToken', renameData.new_token)
         localStorage.setItem('leitner_user_name', userName)
-        const changePasswordData =await customFetch(`/change_password?new_password=${password}`, {
+        await customFetch(`/change_password?new_password=${password}`, {
             method: 'PUT'
         })
         window.location.href = '/'
